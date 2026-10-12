@@ -1,10 +1,9 @@
-const htmlData = document.getElementById('testData');
+let alleData = [];
+let thiGrafiek = null;
 
 fetch('weerdata.json')
   .then((response) => response.json())
   .then((data) => {
-    let htmlInhoud = "";
-
     for (var uur in data) {
       let datum = data[uur].date;
       let datumUur = data[uur].hour;
@@ -18,8 +17,59 @@ fetch('weerdata.json')
       // bereken de NRC THI-formule
       let THI = (1.8 * Tin + 32) - (0.55 - 0.0055 * RHin) * (1.8 * Tin - 26);
 
-      htmlInhoud += datum + " -  " + datumUur + " -  " + Tout + " -  " + RHout +"<br> Tin is = " + Tin + "<br> RHin is = " + RHin + "<br> THI is = " + THI + "<br> <br>";
+      // push alleen de benodige data
+      alleData.push({
+        datum: datum,
+        uur: datumUur,
+        thi: THI
+      });
     }
-    htmlData.innerHTML = htmlInhoud;
+    laadDag(1); // laad de grafiek met altijd maandag als eerste dag
   })
 .catch(console.error);
+
+function updateGrafiek(dataLijst) {
+  const ctx = document.getElementById('THI-Chart');
+
+  // zet de correcte labels en waarden
+  let labels = dataLijst.map(item => 'uur ' + item.uur);
+  let thiWaarden = dataLijst.map(item => item.thi);
+
+  // check of er al een chart bestaat anders maak er 1 aan en vul de gegevens
+  if (thiGrafiek) {
+    thiGrafiek.data.labels = labels;
+    thiGrafiek.data.datasets[0].data = thiWaarden;
+    thiGrafiek.update();
+  } else {
+    thiGrafiek = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'binnen-THI',
+          data: thiWaarden,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false
+          }
+        }
+      }
+    });
+  }
+}
+
+function laadDag(dagNummer) {
+    // stel de maximale uren per dag in
+    let urenPerDag = 24;
+    let startIndex = (dagNummer - 1) * urenPerDag;
+    let eindIndex = startIndex + urenPerDag;
+
+    // pak alleen de gewenste data uit alleData
+    let gefilterdeData = alleData.slice(startIndex, eindIndex);
+
+    updateGrafiek(gefilterdeData);
+}

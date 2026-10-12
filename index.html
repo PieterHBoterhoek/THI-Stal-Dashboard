@@ -6,8 +6,20 @@
     <title>THI Stal Dashboard</title>
 </head>
 <body>
-    <h1>hallo</h1>
-    <p id="testData"></p>
+    <h1>THI Grafiek</h1>
+    <div>
+        <div id="dagKnoppen">
+            <button onclick="laadDag(1)">Maandag</button>
+            <button onclick="laadDag(2)">Dinsdag</button>
+            <button onclick="laadDag(3)">Woensdag</button>
+            <button onclick="laadDag(4)">Donderdag</button>
+            <button onclick="laadDag(5)">Vrijdag</button>
+            <button onclick="laadDag(6)">Zaterdag</button>
+            <button onclick="laadDag(7)">Zondag</button>
+        </div>
+        <canvas id="THI-Chart"></canvas>
+    </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="script.js"></script>
 </html>
