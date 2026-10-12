@@ -7,15 +7,23 @@
 </head>
 <body>
     <h1>THI Grafiek</h1>
+    <span id="huidigeWeek">Week 1</span>
+    <h3 id="datum">Datum: -</h3>
     <div>
+        <div id="weekKnoppen">
+            <button onclick="weekTerug()">VorigeWeek</button>
+        </div>
         <div id="dagKnoppen">
-            <button onclick="laadDag(1)">Maandag</button>
-            <button onclick="laadDag(2)">Dinsdag</button>
-            <button onclick="laadDag(3)">Woensdag</button>
-            <button onclick="laadDag(4)">Donderdag</button>
-            <button onclick="laadDag(5)">Vrijdag</button>
-            <button onclick="laadDag(6)">Zaterdag</button>
-            <button onclick="laadDag(7)">Zondag</button>
+            <button id="ma" onclick="kiesDag(1)">Maandag</button>
+            <button id="di" onclick="kiesDag(2)">Dinsdag</button>
+            <button id="wo" onclick="kiesDag(3)">Woensdag</button>
+            <button id="do" onclick="kiesDag(4)">Donderdag</button>
+            <button id="vr" onclick="kiesDag(5)">Vrijdag</button>
+            <button id="za" onclick="kiesDag(6)">Zaterdag</button>
+            <button id="zo" onclick="kiesDag(7)">Zondag</button>
+        </div>
+        <div id="weekKnoppen">
+            <button onclick="weekVerder()">VolgendeWeek</button>
         </div>
         <canvas id="THI-Chart"></canvas>
     </div>
