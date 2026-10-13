@@ -1,0 +1,145 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.titel {
+    text-align: center;
+}
+
+#waarschuwing {
+    padding: 8px;
+    border-radius: 10px;
+    min-height: 40px;
+    text-align: center;
+}
+
+.dataInfo {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    gap: 10px;
+}
+
+.weekKnoppen {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.weekKnop {
+    padding: 8px 12px;
+    margin: 2px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all .5s ease;
+}
+
+.weekKnop:hover {
+    background-color: #007bff;
+    color: white;
+    scale: 1.01;
+}
+
+#dagKnoppen {
+    display: flex;
+    max-width: 100%;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.dagknop {
+    padding: 8px 12px;
+    margin: 2px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all .5s ease;
+}
+
+.dagknop:hover {
+    background-color: #007bff;
+    color: white;
+    scale: 1.01;
+}
+
+.dagknop.active {
+    background-color: #007bff;
+    color: white;
+}
+
+@media screen and (min-width: 950px) {
+    #waarschuwing {
+        min-height: 0;
+        width: fit-content;
+    }
+
+    .datumMenu {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .weekKnop.Terug {
+        position: absolute;
+        left: 10px;
+    }
+
+    .weekKnop.Verder {
+        position: absolute;
+        right: 10px;
+    }
+
+    .weekKnop:hover {
+        scale: 1.1;
+    }
+
+
+    .dataInfo {
+        height: 45px;
+        gap: 1em;
+    }
+
+    #dagKnoppen {
+        display: block;
+    }
+
+    .dagknop:hover {
+        background-color: #007bff;
+        color: white;
+        scale: 1.1;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    #waarschuwing {
+        min-height: 0;
+        text-align: center;
+    }
+
+    .header {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .titel {
+        position: absolute;
+        left: 10px;
+        top: 0;
+    }
+}

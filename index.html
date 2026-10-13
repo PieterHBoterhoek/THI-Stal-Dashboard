@@ -4,30 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THI Stal Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>THI Grafiek</h1>
-    <span id="huidigeWeek">Week 1</span>
-    <h3 id="datum">Datum: -</h3>
-    <span id="waarschuwing"></span>
-    <div>
-        <div id="weekKnoppen">
-            <button onclick="weekTerug()">VorigeWeek</button>
+    <div class="header">
+        <h1 class="titel">THI Stal Dashboard</h1>
+        <p id="waarschuwing"></span>        
+    </div>
+    <div class="dataInfo">
+        <p id="datum">Datum: -</h3>
+        <p>|</p>
+        <p id="huidigeWeek">Week 1</span>   
+    </div>
+    <div class="datumMenu">
+        <div class="weekKnoppen">
+            <button class="weekKnop Terug" id="weekKnopTerug" onclick="weekTerug()">&lt; Vorige week</button>
+            <button class="weekKnop Verder" id="weekKnopVerder" onclick="weekVerder()">Volgende week &gt;</button>
         </div>
         <div id="dagKnoppen">
-            <button id="ma" onclick="kiesDag(1)">Maandag</button>
-            <button id="di" onclick="kiesDag(2)">Dinsdag</button>
-            <button id="wo" onclick="kiesDag(3)">Woensdag</button>
-            <button id="do" onclick="kiesDag(4)">Donderdag</button>
-            <button id="vr" onclick="kiesDag(5)">Vrijdag</button>
-            <button id="za" onclick="kiesDag(6)">Zaterdag</button>
-            <button id="zo" onclick="kiesDag(7)">Zondag</button>
+            <button class="dagknop" id="ma" onclick="kiesDag(1)">Maandag</button>
+            <button class="dagknop" id="di" onclick="kiesDag(2)">Dinsdag</button>
+            <button class="dagknop" id="wo" onclick="kiesDag(3)">Woensdag</button>
+            <button class="dagknop" id="do" onclick="kiesDag(4)">Donderdag</button>
+            <button class="dagknop" id="vr" onclick="kiesDag(5)">Vrijdag</button>
+            <button class="dagknop" id="za" onclick="kiesDag(6)">Zaterdag</button>
+            <button class="dagknop" id="zo" onclick="kiesDag(7)">Zondag</button>
         </div>
-        <div id="weekKnoppen">
-            <button onclick="weekVerder()">VolgendeWeek</button>
         </div>
-        <canvas id="THI-Chart"></canvas>
     </div>
+    <canvas id="THI-Chart"></canvas>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="script.js"></script>

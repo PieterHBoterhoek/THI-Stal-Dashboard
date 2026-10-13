@@ -62,9 +62,9 @@ function updateGrafiek(dataLijst) {
           borderWidth: 1,
           pointBackgroundColor: context => {
             const value = context.raw;
-            if (value > 68) 
+            if (value > 68)
               return 'red';
-            if (value > 60) 
+            if (value > 60)
               return 'orange';
             else
               return 'green';
@@ -75,8 +75,16 @@ function updateGrafiek(dataLijst) {
       options: {
         scales: {
           y: {
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)',
+            },
             beginAtZero: true,
             suggestedMax: 90
+          },
+          x: {
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)',
+            }
           }
         }
       }
@@ -89,7 +97,7 @@ function setBeginDatum(index) {
   let startDagIndexInWeek = index === 1 ? 7 : index;
 
   huidigeDag = startDagIndexInWeek;
-  updateKnop(startDagIndexInWeek);
+  updateDagKnop(startDagIndexInWeek);
 }
 
 function laadDag() {
@@ -98,7 +106,7 @@ function laadDag() {
   let eersteDagVanJaar = new Date(alleData[0].datum);
   let dagIndex = eersteDagVanJaar.getUTCDay();
   let startDag = dagIndex === 0 ? 7 : dagIndex;
-  updateKnop(startDag);
+  updateDagKnop(startDag);
 
   let urenPerDag = 24;
   let gekozenDag = huidigeDag;
@@ -117,39 +125,52 @@ function laadDag() {
     updateGrafiek(gefilterdeData);
 
     let huidigeDatum = gefilterdeData[0].datum.split('T')[0];
-    document.getElementById("datum").innerText = `Datum: ${huidigeDatum}`;
+    document.getElementById("datum").innerText = ` ${huidigeDatum}`;
 
     // check alle thi waarden en geef een waarschuwing als de hittegrens is bereikt
     let aantalHitteGrensUren = gefilterdeData.filter(item => item.thi > 68);
     let waarschuwElement = document.getElementById("waarschuwing");
 
     if (aantalHitteGrensUren.length > 0) {
-        waarschuwElement.style.backgroundColor = "#f66868";
-        waarschuwElement.innerHTML = `Waarschuwing: Op deze dag komt de THI ${aantalHitteGrensUren.length} keer boven de grens van 68`;
+      waarschuwElement.style.backgroundColor = "#d31515";
+      waarschuwElement.innerHTML = `<strong>Waarschuwing:</strong> Op deze dag komt de THI ${aantalHitteGrensUren.length} keer boven de grens van 68`;
     } else {
-        waarschuwElement.style.backgroundColor = "#92fcab";
-        waarschuwElement.innerHTML = `Geen hittestress gedetecteerd op deze dag (alles onder 68).`;
+      waarschuwElement.style.backgroundColor = "#004210";
+      waarschuwElement.innerHTML = `Geen hittestress gedetecteerd op deze dag`;
     }
   } else {
     document.getElementById("datum").innerText = "Geen data";
   }
 
   document.getElementById("huidigeWeek").innerText = `Week ${huidigeWeek}`;
+  updateWeekKnoppen();
 }
 
-// kijk voor elke dag knop of het gedisabled moet worden
-function updateKnop(startDagIndexInWeek) {
+// kijk voor elke dag knop of het gedisabled moet worden en welke actief is
+function updateDagKnop(startDagIndexInWeek) {
   let knoppen = ["ma", "di", "wo", "do", "vr", "za", "zo"];
 
   knoppen.forEach((id, knopIndex) => {
     let knop = document.getElementById(id);
+    let dagNummerVanKnop = knopIndex + 1;
 
-    if (huidigeWeek === 1 && knopIndex + 1 < startDagIndexInWeek) {
+    // check of de knop gedisabled moet worden alleen voor week 1
+    if (huidigeWeek === 1 && dagNummerVanKnop < startDagIndexInWeek) {
       knop.disabled = true;
       knop.style.cursor = "not-allowed";
+      knop.style.opacity = "0.4";
+      knop.classList.remove('active');
     } else {
       knop.disabled = false;
       knop.style.cursor = "pointer";
+      knop.style.opacity = "1";
+
+      // check of de knop momenteel geselecteerd is
+      if (dagNummerVanKnop === huidigeDag) {
+        knop.classList.add('active');
+      } else {
+        knop.classList.remove('active');
+      }
     }
   });
 }
@@ -173,6 +194,33 @@ function weekTerug() {
       huidigeDag = startDagIndexInWeek;
     }
     laadDag();
+  }
+}
+
+// update de weekknoppen hun visueel als je niet meer een week terug kan of verder
+function updateWeekKnoppen() {
+  let maxWeken = Math.floor(alleData.length / 168);
+  let weekTerug = document.getElementById("weekKnopTerug");
+  let weekVerder = document.getElementById("weekKnopVerder");
+
+  if (huidigeWeek <= 1) {
+    weekTerug.disabled = true;
+    weekTerug.style.opacity = "0.4";
+    weekTerug.style.cursor = "not-allowed";
+  } else {
+    weekTerug.disabled = false;
+    weekTerug.style.opacity = "1";
+    weekTerug.style.cursor = "pointer";
+  }
+
+  if (huidigeWeek >= maxWeken) {
+    weekVerder.disabled = true;
+    weekVerder.style.opacity = "0.4";
+    weekVerder.style.cursor = "not-allowed";
+  } else {
+    weekVerder.disabled = false;
+    weekVerder.style.opacity = "1";
+    weekVerder.style.cursor = "pointer";
   }
 }
 
