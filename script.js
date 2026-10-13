@@ -59,13 +59,24 @@ function updateGrafiek(dataLijst) {
         datasets: [{
           label: 'binnen-THI',
           data: thiWaarden,
-          borderWidth: 1
+          borderWidth: 1,
+          pointBackgroundColor: context => {
+            const value = context.raw;
+            if (value > 68) 
+              return 'red';
+            if (value > 60) 
+              return 'orange';
+            else
+              return 'green';
+          },
+          pointRadius: 6
         }]
       },
       options: {
         scales: {
           y: {
-            beginAtZero: false
+            beginAtZero: true,
+            suggestedMax: 90
           }
         }
       }
@@ -100,13 +111,25 @@ function laadDag() {
   let startIndex = dagVanafStart * urenPerDag;
   let eindIndex = startIndex + urenPerDag;
 
-  // check of de data bestaat en haal de data die bij deze dag hoort op en toon deze
+  // check of de data bestaat en haal de data die bij deze dag hoort op en toon deze // en check de thi values en geef aan of het te heet is
   if (startIndex >= 0 && startIndex < alleData.length) {
     let gefilterdeData = alleData.slice(startIndex, eindIndex);
     updateGrafiek(gefilterdeData);
 
     let huidigeDatum = gefilterdeData[0].datum.split('T')[0];
     document.getElementById("datum").innerText = `Datum: ${huidigeDatum}`;
+
+    // check alle thi waarden en geef een waarschuwing als de hittegrens is bereikt
+    let aantalHitteGrensUren = gefilterdeData.filter(item => item.thi > 68);
+    let waarschuwElement = document.getElementById("waarschuwing");
+
+    if (aantalHitteGrensUren.length > 0) {
+        waarschuwElement.style.backgroundColor = "#f66868";
+        waarschuwElement.innerHTML = `Waarschuwing: Op deze dag komt de THI ${aantalHitteGrensUren.length} keer boven de grens van 68`;
+    } else {
+        waarschuwElement.style.backgroundColor = "#92fcab";
+        waarschuwElement.innerHTML = `Geen hittestress gedetecteerd op deze dag (alles onder 68).`;
+    }
   } else {
     document.getElementById("datum").innerText = "Geen data";
   }
