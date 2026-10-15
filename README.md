@@ -5,7 +5,7 @@ berekent de binnen-THI en visualiseert deze in lijngrafieken met duidelijke waar
 
 **Website** - [Bekijk hier het dashboard](https://pieterhboterhoek.github.io/THI-Stal-Dashboard/)
 
-<img width="2422" height="1432" alt="image" src="https://github.com/user-attachments/assets/e04466ac-8983-41a6-98f3-afa956149acd" />
+<img width="2422" height="1432" alt="image" src="preview/image.png" />
 
 
 ## Functionaliteiten
@@ -19,7 +19,8 @@ Het dashboard berekent de **NRC THI-formule** op basis van de buitenwaarden (Tou
 
 1. **Binnentemperatuur (Tin​):** *Tin​=0,879⋅Tout​+4,68*
 2. **Binnen-luchtvochtigheid (RHin​):** *RHin​=0,651⋅RHout​+0,239⋅Tout​+15,40*
-3. **NRC THI-formule:** *THIin​=(1,8⋅Tin​+32)−(0,55−0,0055⋅RHin​)⋅(1,8⋅Tin​−26)*
+3. **NRC THI-formule (binnen-THI):** *THIin​=(1,8⋅Tin​+32)−(0,55−0,0055⋅RHin​)⋅(1,8⋅Tin​−26)*
+4. **NRC THI-formule (Buiten-THI):** *THIout​=(1,8⋅Tout​+32)−(0,55−0,0055⋅RHout​)⋅(1,8⋅Tout​−26)*
 
 ## Technische Stack
 * **Frontend:** HTML5, CSS3, JavaScript
